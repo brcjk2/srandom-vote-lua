@@ -1,3 +1,42 @@
+argsave = arg
+whty = true
+if pcall(function()
+if arg[1]:find("^-") then
+    print("Usage: ./vote.sh VAL|\"None\" [-i|--input-file FILE] [LIST...]")
+    os.exit()
+end
+
+if arg[2] == "-i" or arg[2] == "--input-file" then
+    local lines = {}
+    for line in io.lines(arg[3]) do 
+        lines[#lines + 1] = line
+    end
+    for _,f in pairs(lines) do
+        for str in string.gmatch(f, "([^".."%s".."]+)") do
+            table.insert(argsave, 4, str)
+        end
+    end
+    table.remove(argsave, 2)
+    table.remove(argsave, 2)
+    whty = false
+elseif arg[2] == "-h" or arg[2] == "--help" then
+    print("Usage: ./vote.sh VAL|\"None\" [-i|--input-file FILE] [LIST...]")
+    os.exit()
+    print(arg[2])
+end
+
+end) == false then 
+arg = argsave end
+
+
+
+
+
+
+
+
+
+
 list1 = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '!', '#', '$', '%', '&', '(', ')', '*', ',', '-', '.', '/', ':', ';', '<', '>', '?', '@', '^', '_', '`', '{', '|', '}', '~', '¡', '¢', '£', '¤', '¥', '¦', '§', '¨', 'ª'}
 
 num = arg[1]
@@ -43,10 +82,14 @@ local function Teir(o)
     result = ""
     t = o
     ts = {}
-    for h,_ in ipairs(t) do
-    	ts[h] = t[#t-h+1]
+    if whty then
+        for h,_ in ipairs(t) do
+        	ts[h] = t[#t-h+1]
+        end
+    else
+        ts = t 
     end
-    for _,n in pairs(ts) do
+    for _,n in ipairs(ts) do
         ts = {}
         b = string.gsub(n, "%s+", "")
         b:gsub(".",function(c) table.insert(ts,c) end)
@@ -54,7 +97,6 @@ local function Teir(o)
         ShuffleInPlace(ts)
         table.insert(bsaver, ts)
     end
-    --print(bsaver[3])
     ShuffleInPlace(list1)
     result = result .. table.concat(list1)
     for _,c in pairs(bsaver) do
