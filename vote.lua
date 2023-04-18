@@ -39,15 +39,13 @@ end
 
 bsaver = {}
 
-local function Teir(...)
+local function Teir(o)
     result = ""
-    t = {...}
+    t = o
     --print(table.concat(t))
     ts = {}
-    for h,_ in pairs(t) do
-	print(h)
+    for h,_ in ipairs(t) do
     	ts[h] = t[#t-h+1]
-	print(table.concat(ts))
     end
     --print(table.concat(t))
     for _,n in pairs(ts) do
@@ -71,7 +69,7 @@ table.remove(arg, 1)
 
 items = arg
 --print(table.unpack(items))
-RESULT = Teir(table.unpack(items))
+RESULT = Teir(items)
 print(RESULT)
 
 os.exit()
