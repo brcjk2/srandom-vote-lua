@@ -42,12 +42,10 @@ bsaver = {}
 local function Teir(o)
     result = ""
     t = o
-    --print(table.concat(t))
     ts = {}
     for h,_ in ipairs(t) do
     	ts[h] = t[#t-h+1]
     end
-    --print(table.concat(t))
     for _,n in pairs(ts) do
         ts = {}
         b = string.gsub(n, "%s+", "")
@@ -68,7 +66,6 @@ end
 table.remove(arg, 1)
 
 items = arg
---print(table.unpack(items))
 RESULT = Teir(items)
 print(RESULT)
 
